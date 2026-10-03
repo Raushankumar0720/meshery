@@ -167,11 +167,12 @@ function groupModelsByVersion(models) {
   const modelMap: Record<string, any> = {};
   models.forEach((model) => {
     if (!model || !model.name) return;
-    const modelVersions = Array.isArray(model.version)
-      ? model.version
-      : model.version !== undefined
-      ? [model.version]
-      : [];
+    let modelVersions: string[] = [];
+    if (Array.isArray(model.version)) {
+      modelVersions = model.version;
+    } else if (model.version !== undefined) {
+      modelVersions = [model.version];
+    }
     const existing = modelMap[model.name];
     if (existing) {
       modelMap[model.name] = {
