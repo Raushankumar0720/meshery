@@ -149,6 +149,14 @@ describe('sortAndGroupVersionsInModel', () => {
     expect(bar!.version).toEqual(['0.5.0']);
   });
 
+  it('does not mutate initially array-valued model versions', () => {
+    const models = [{ name: 'foo', version: ['1.0.0', '2.0.0'] }];
+
+    sortAndGroupVersionsInModel(models);
+
+    expect(models).toEqual([{ name: 'foo', version: ['1.0.0', '2.0.0'] }]);
+  });
+
   it('returns an empty array when given null/undefined', () => {
     expect(sortAndGroupVersionsInModel(null)).toEqual([]);
     expect(sortAndGroupVersionsInModel(undefined)).toEqual([]);
